@@ -1,0 +1,140 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #FDEDF4FA; /* Warna awal */
+    transition: background-color 0.5s ease-in-out;
+}
+
+.container {
+width: 90%; /* Memperbesar container */
+max-width: 1400px; /* Maksimal ukuran */
+display: flex;
+align-items: center;
+justify-content: space-between;
+}
+
+.text-section {
+flex: 2; /* Membuat text-section lebih besar */
+max-width: 1000px; /* Memberi batas agar tidak terlalu lebar */
+padding-right: 250px; /* Memberi ruang antara teks dan sepatu */
+max-height: 100%;
+margin-left: -130px;
+
+}
+
+h1 {
+font-size: 50px; /* Memperbesar judul */
+font-weight: 700;
+margin-bottom: 50px;
+}
+
+.description {
+font-size: 22px; /* Memperbesar deskripsi */
+line-height: 1.8;
+margin-bottom: 50px;
+}
+
+.price {
+font-size: 30px; /* Harga lebih besar */
+}
+
+.old-price {
+font-size: 26px;
+color: #999; /* Warna abu-abu */
+text-decoration: line-through;
+font-weight: 700; /* Tambahkan ketebalan */
+opacity: 0.8; /* Efek sedikit transparan */
+margin-left: 8px; /* Beri jarak dari harga baru */
+}
+
+
+.social-icons {
+display: flex;
+gap: 20px; /* Menambahkan jarak antar ikon */
+margin-top: 30px;
+}
+
+.social-icons img {
+width: 50px; /* Ukuran ikon tetap */
+height: auto;
+}
+
+
+.shoes-container {
+width: 40%; /* Memperkecil area sepatu */
+height: 500px;
+display: flex;
+justify-content: center;
+align-items: center;
+padding-left: 50px; /* Mengurangi padding agar lebih proporsional */
+}
+
+
+.logo {
+display: flex;
+align-items: center;
+gap: 15px; /* Beri jarak antara logo dan teks */
+margin-top: -590px;
+padding-left: -100px;
+margin-left: 15px;
+}
+
+.logo img {
+width: 170px; /* Ukuran lebih kecil agar proporsional */
+height: 100px; /* Menjaga aspek rasio */
+
+}
+
+
+.shoe {
+width: 420px;
+height: 420px;
+position: absolute;
+transition: transform 1.4s ease-in-out, opacity 1.4s ease-in-out, filter 1.4s ease-in-out;
+cursor: pointer;
+margin-left: -200px;
+margin-top: -150px;
+}
+
+/* Sepatu Tengah - Efek membesar & blur hilang perlahan */
+.shoe.center {
+transform: translateY(0) scale(1);
+z-index: 3;
+filter: blur(0px);
+opacity: 1;
+}
+
+/* Sepatu Atas - Lebih kecil & blur */
+.shoe.top {
+transform: translateY(-180px) translateX(120px) scale(0.5); /* Tambah translateX */
+z-index: 2;
+filter: blur(2px);
+opacity: 0.5;
+}
+
+/* Sepatu Bawah - Lebih kecil, blur, dan geser sedikit ke kanan */
+.shoe.bottom {
+transform: translateY(180px) translateX(110px) scale(0.5); /* Tambah translateX */
+z-index: 1;
+filter: blur(2px);
+opacity: 0.5;
+}
+
+
+/* Sepatu yang belum muncul */
+.shoe.hidden {
+opacity: 0;
+visibility: hidden;
+transform: translateY(-200px) scale(0.7);
+}
