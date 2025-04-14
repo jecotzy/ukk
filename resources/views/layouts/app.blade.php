@@ -34,8 +34,9 @@
 
             <!-- Page Content -->
             <main>
-                {{ $slot }}
-            </main>
+    @yield('content') {{-- Gunakan @yield agar bisa diisi dengan @section di halaman lain --}}
+</main>
+
         </div>
 
         @stack('modals')

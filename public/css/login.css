@@ -206,3 +206,19 @@
             color: #4E3E6D;
             text-decoration: underline;
         }
+
+        /* Animasi Fade Out */
+.fade-out {
+    opacity: 1;
+    animation: fadeOutAnimation 0.5s ease-in-out forwards;
+}
+
+/* Keyframes untuk fade out */
+@keyframes fadeOutAnimation {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}

@@ -62,7 +62,7 @@ margin-left: 8px; /* Beri jarak dari harga baru */
 .social-icons {
 display: flex;
 gap: 20px; /* Menambahkan jarak antar ikon */
-margin-top: 30px;
+margin-top: 20px;
 }
 
 .social-icons img {
@@ -137,4 +137,176 @@ opacity: 0.5;
 opacity: 0;
 visibility: hidden;
 transform: translateY(-200px) scale(0.7);
+}
+
+/* .back-buttons {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0px; 
+} */
+
+.back-button img {
+    display: block;
+    padding: 0;
+    margin: 0;
+    transform: rotate(90deg);
+    transform-origin: center;
+    transition: transform 0.8s ease-in-out;
+}
+
+/* Ukuran tombol */
+.back-button.large img {
+    width: 30px;
+    height: 55px;
+}
+
+.back-buttons {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: bottom 0.8s ease-in-out;
+    z-index: 1100;
+}
+
+/* Saat tombol aktif (bergerak ke atas) */
+.back-buttons.active {
+    bottom: 120px; /* Pindah ke atas hidden section */
+}
+
+/* Saat tombol aktif, rotasi ke 180 derajat */
+.back-buttons.active img {
+    transform: rotate(270deg);
+    transition: transform 0.8s cubic-bezier(0.65, 0, 0.65, 1); /* Lebih smooth */
+}
+
+/* Saat tombol kembali ke awal, buat animasi smooth */
+.back-buttons.inactive img {
+    transform: rotate(90deg);
+    transition: transform 0.8s cubic-bezier(0.65, 0, 0.65, 1); /* Lebih smooth */
+}
+
+
+.hidden-section {
+    display: none;
+    background: black;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    opacity: 0; /* Awalnya tidak terlihat */
+    visibility: hidden; /* Awalnya tidak bisa diklik */
+    transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out;
+}
+
+.hidden-section.active {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 100px;
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;    
+}
+
+.hidden-section.inactive {
+    opacity: 0;
+    visibility: hidden;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 100px;
+    transform: translateY(0);
+}
+
+.stats-container {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.stat {
+    text-align: center;
+    color: #FFF8F8;
+
+}
+
+.stat h2 {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0;
+    color: #FFF8F8;
+}
+
+.stat p {
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0;
+    color: #FFF8F8;
+}
+
+.premium {
+    text-align: right;
+}
+
+.premium p {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #FFF8F8;
+}
+
+.premium button {
+    background: white;
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 160px;
+    margin-right: 50px;
+}
+
+.premium button:hover {
+    background: #ddd;
+}
+/* Efek Fade In */
+.fade-in {
+    opacity: 0;
+    animation: fadeInAnimation 1s ease-in-out forwards;
+}
+
+/* Keyframes untuk animasi fade in */
+@keyframes fadeInAnimation {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+
+
+/* Saat keluar, fade out */
+body.fade-out {
+    opacity: 1;
+    animation: fadeOut 0.5s forwards;
+}
+
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
 }

@@ -7,7 +7,6 @@
 
     <!-- Link ke file CSS -->
     <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
-
 </head>
 <body>
 
@@ -16,6 +15,13 @@
         <img src="{{ asset('img/logo.png') }}" alt="StepByStep Logo">
     </div>
 
+    <div class="back-buttons">
+    <a href="#" class="back-button large" id="arrowButton" onclick="toggleSection(event)">
+        <img src="{{ asset('img/arrow.png') }}" alt="Arrow">
+    </a>
+
+    </div>
+    
     <div class="container">
         <!-- Bagian teks dan informasi produk -->
         <div class="text-section">
@@ -47,29 +53,53 @@
         </div>
     </div>
 
+    <!-- Hidden Section -->
+    <!-- Hidden Section -->
+<div class="hidden-section" id="hiddenSection">
+    <div class="stats-container">
+        <div class="stat">
+            <h2 id="counter1">0</h2>  <!-- Tambahkan ID untuk animasi angka -->
+            <p>Happy Customers</p>  
+        </div>
+        <div class="stat">
+            <h2 id="counter2">0</h2>  <!-- Tambahkan ID untuk animasi angka -->
+            <p>Unique Design</p>
+        </div>
+        <div class="stat">
+            <h2 id="counter3">0</h2>  <!-- Tambahkan ID untuk animasi angka -->
+            <p>Exclusive Members</p>
+        </div>
+        <div class="premium">
+            <p>Premium Quality Guaranteed</p>
+            <button onclick="hideSection()" id="shopButton">Shop</button>
+        </div>
+    </div>
+</div>
+
+
+
     <script>
+        document.addEventListener("DOMContentLoaded", function () {
+    document.body.classList.add("fade-in"); // Tambahkan class saat halaman dimuat
+});
         // Array yang menyimpan ID setiap sepatu
         let shoeIds = ["shoe-0", "shoe-1", "shoe-2", "shoe-3"];
         let currentIndex = 0; // Indeks awal untuk rotasi
 
         function rotateShoes() {
-            // Ambil elemen sepatu berdasarkan indeks saat ini
             let topShoe = document.getElementById(shoeIds[(currentIndex + 1) % 4]);
             let centerShoe = document.getElementById(shoeIds[currentIndex]);
-            let bottomShoe = document.getElementById(shoeIds[(currentIndex + 3) % 4]); // Sepatu bawah
-            let hiddenShoe = document.getElementById(shoeIds[(currentIndex + 2) % 4]); // Sepatu baru yang akan muncul
+            let bottomShoe = document.getElementById(shoeIds[(currentIndex + 3) % 4]);
+            let hiddenShoe = document.getElementById(shoeIds[(currentIndex + 2) % 4]);
 
-            // Ubah warna background berdasarkan siklus sepatu
             let backgroundColors = ["#FDFBEDFA", "#EDFAFDFA", "#FDEDF4FA", "#F8F0FCFA"];
             document.body.style.backgroundColor = backgroundColors[currentIndex];
 
-            // Pastikan sepatu bawah tetap terlihat setelah pertama kali klik
             if (bottomShoe.classList.contains("hidden")) {
                 bottomShoe.classList.remove("hidden");
                 bottomShoe.classList.add("bottom");
             }
 
-            // Geser posisi sepatu dalam animasi rotasi
             hiddenShoe.classList.remove("hidden");
             hiddenShoe.classList.add("top");
 
@@ -82,7 +112,6 @@
             bottomShoe.classList.remove("bottom");
             bottomShoe.classList.add("hidden");
 
-            // Update indeks untuk rotasi berikutnya
             currentIndex = (currentIndex + 1) % 4;
         }
 
@@ -90,6 +119,107 @@
         document.querySelectorAll('.shoe').forEach(shoe => {
             shoe.addEventListener('click', rotateShoes);
         });
+
+        // Fungsi animasi angka bertambah
+function animateCounter(element, target, duration) {
+    let start = 0;
+    let increment = (target - start) / (duration / 10); // Hitung kenaikan per interval (10ms)
+    let current = start;
+
+    let counter = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+            clearInterval(counter);
+            current = target; // Pastikan berhenti di angka target
+        }
+        element.textContent = formatNumber(current);
+    }, 10); // Perbarui angka setiap 10ms
+}
+
+// Fungsi format angka agar menjadi "17.5M"
+function formatNumber(num) {
+    if (num >= 1000000) {
+        return (num / 1000000).toFixed(1) + "M+"; // Format dalam jutaan
+    }
+    return Math.floor(num) + "+"; // Tampilkan angka bulat untuk angka kecil
+}
+
+// Fungsi untuk menampilkan atau menyembunyikan hidden section
+// Fungsi animasi angka bertambah dalam format K/M dengan tanda "+"
+function animateCounter(element, target, duration) {
+    let start = 0;
+    let increment = (target - start) / (duration / 10); 
+    let current = start;
+
+    let counter = setInterval(() => {
+        current += increment;
+
+        if (current >= target) {
+            clearInterval(counter);
+            current = target; // Pastikan berhenti di angka target
+        }
+
+        element.textContent = formatNumber(current) + "+"; // Update tampilan
+    }, 10);
+}
+
+// Fungsi format angka agar tetap dalam "M+" dan "K+"
+function formatNumber(num) {
+    if (num >= 1000000) {
+        return (num / 1000000).toFixed(1) + "M"; // Contoh: 17.5M
+    } else if (num >= 1000) {
+        return (num / 1000).toFixed(1) + "K"; // Contoh: 1.5K, 10K
+    }
+    return Math.floor(num); // Jika di bawah 1.000, tampilkan angka asli
+}
+
+// Fungsi untuk menampilkan atau menyembunyikan hidden section
+function toggleSection(event) {
+    event.preventDefault();
+    let hiddenSection = document.getElementById("hiddenSection");
+    let arrowButton = document.getElementById("arrowButton").parentElement;
+
+    if (hiddenSection.classList.contains("active")) {
+        hiddenSection.classList.remove("active");
+        hiddenSection.classList.add("inactive");
+
+        arrowButton.classList.remove("active");
+        arrowButton.classList.add("inactive");
+
+        setTimeout(() => {
+            hiddenSection.style.visibility = "hidden"; 
+        }, 800);
+    } else {
+        hiddenSection.style.visibility = "visible"; 
+        hiddenSection.classList.remove("inactive");
+        hiddenSection.classList.add("active");
+
+        arrowButton.classList.remove("inactive");
+        arrowButton.classList.add("active");
+
+        // Animasi angka saat hidden section muncul
+        animateCounter(document.getElementById("counter1"), 17500000, 1500); // 17.5M+
+        animateCounter(document.getElementById("counter2"), 1500, 1500); // 1.5K+
+        animateCounter(document.getElementById("counter3"), 10000, 1500); // 10K+
+    }
+}
+
+document.getElementById("shopButton").addEventListener("click", function (event) {
+    event.preventDefault();
+    document.body.classList.add("fade-out"); // Tambahkan efek fade-out
+
+    setTimeout(() => {
+        window.location.href = "{{ route('home') }}"; // Redirect setelah animasi
+    }, 500); // Sesuaikan dengan durasi animasi CSS
+});
+
+
+
+
+
+
+
+
     </script>
 
 </body>
