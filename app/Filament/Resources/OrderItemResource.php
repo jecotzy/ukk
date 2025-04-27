@@ -4,20 +4,19 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\OrderItemResource\Pages;
 use App\Models\OrderItem;
-use Filament\Forms;
+use App\Models\Product;
 use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Tables\Table;
-use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Tables;
+use Filament\Tables\Table;
+use Filament\Tables\Columns\TextColumn;
 
 class OrderItemResource extends Resource
 {
     protected static ?string $model = OrderItem::class;
-
-    // Tambahkan agar muncul di sidebar
     protected static ?string $navigationGroup = 'E-commerce';
     protected static ?string $navigationIcon = 'heroicon-o-shopping-cart';
 
@@ -29,33 +28,35 @@ class OrderItemResource extends Resource
                 ->required(),
 
             Select::make('product_id')
-                ->relationship('product', 'name')
+                ->relationship('product', 'product_name')
                 ->required()
                 ->reactive()
                 ->afterStateUpdated(function ($state, callable $get, callable $set) {
-                    $product = \App\Models\Product::find($state);
-                    $quantity = $get('quantity') ?? 1;
+                    $product = Product::find($state);
+                    $qty = $get('quantity') ?? 1;
                     if ($product) {
-                        $set('subtotal', $quantity * $product->price);
+                        $set('subtotal', $product->price * $qty);
                     }
                 }),
 
             TextInput::make('quantity')
                 ->numeric()
+                ->default(1)
                 ->required()
                 ->reactive()
                 ->afterStateUpdated(function ($state, callable $get, callable $set) {
                     $productId = $get('product_id');
-                    $product = \App\Models\Product::find($productId);
+                    $product = Product::find($productId);
                     if ($product) {
-                        $set('subtotal', $state * $product->price);
+                        $set('subtotal', $product->price * $state);
                     }
                 }),
 
             TextInput::make('subtotal')
                 ->numeric()
+                ->required()
                 ->disabled()
-                ->required(),
+                ->dehydrated()
         ]);
     }
 
@@ -63,10 +64,9 @@ class OrderItemResource extends Resource
     {
         return $table->columns([
             TextColumn::make('order.id')->label('Order ID'),
-            TextColumn::make('product.name')->label('Product'),
-            TextColumn::make('quantity')->label('Qty'),
-            TextColumn::make('subtotal')->money('IDR')->label('Subtotal'),
-            TextColumn::make('created_at')->dateTime()->label('Created'),
+            TextColumn::make('product.product_name')->label('Product'),
+            TextColumn::make('quantity'),
+            TextColumn::make('subtotal')->money('IDR'),
         ]);
     }
 

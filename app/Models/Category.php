@@ -9,17 +9,13 @@ class Category extends Model
 {
     use HasFactory;
     
-    /**
-     * fillable
-     *
-     * @var array
-     */
     protected $fillable = [
         'category_name',
         'description',
     ];
 
-    public function posts()
+    // Ubah nama relasi posts menjadi products
+    public function products()
     {
         return $this->hasMany(Product::class);
     }

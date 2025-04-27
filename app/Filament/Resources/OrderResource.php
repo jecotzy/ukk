@@ -16,7 +16,8 @@ use Filament\Forms\Components\DateTimePicker;
 class OrderResource extends Resource
 {
     protected static ?string $model = Order::class;
-
+    protected static ?string $navigationGroup = 'E-commerce';
+    
     public static function form(Forms\Form $form): Forms\Form
     {
         return $form->schema([

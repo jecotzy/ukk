@@ -2,41 +2,35 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProductController;
 
+// Halaman welcome (guest)
 Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 
-// Route untuk halaman register
+// Auth routes
 Route::get('/register', function () {
     return view('auth.register');
 })->name('register');
-
-// Route untuk menangani registrasi
 Route::post('/register', [AuthController::class, 'register'])->name('register.submit');
 
-// Route untuk halaman login
 Route::get('/login', function () {
-    return view('auth.login'); // Sesuaikan dengan lokasi file Blade login
+    return view('auth.login');
 })->name('login');
-
-// Route untuk menangani proses login
 Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
 
-// Route untuk logout
 Route::post('/logout', function () {
     Auth::logout();
     return redirect()->route('login');
 })->name('logout');
 
-// Route yang membutuhkan autentikasi
+// Dashboard (harus login)
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+
+    // Home page dengan carousel produk
+    Route::get('/home', [ProductController::class, 'index'])->name('home');
 });
-
-Route::get('/home', function () {
-    return view('home');
-})->name('home');
-
