@@ -14,9 +14,15 @@ class Category extends Model
         'description',
     ];
 
-    // Ubah nama relasi posts menjadi products
+    // Primary relation to products (for category_id)
     public function products()
     {
         return $this->hasMany(Product::class);
+    }
+
+    // Secondary relation to products (for secondary_category_id)
+    public function secondaryProducts()
+    {
+        return $this->hasMany(Product::class, 'secondary_category_id');
     }
 }

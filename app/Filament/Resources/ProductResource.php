@@ -1,5 +1,7 @@
 <?php
 
+// app/Filament/Resources/ProductResource.php
+
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ProductResource\Pages;
@@ -27,22 +29,26 @@ class ProductResource extends Resource
                 ->required(),
 
             Forms\Components\TextInput::make('price')
-                ->numeric()
-                ->required()
-                ->prefix('Rp'),
+                ->numeric()->required()->prefix('Rp'),
 
             Forms\Components\TextInput::make('stock')
-                ->numeric()
+                ->numeric()->required(),
+
+            // **Ubah di sini**: pakai nama relasi primaryCategory
+            Forms\Components\Select::make('category_id')
+                ->label('Primary Category')
+                ->relationship('primaryCategory', 'category_name')
                 ->required(),
 
-                Forms\Components\Select::make('category_id')
-                ->relationship('category', 'category_name') // ✅ betul, sesuai kolom di DB
-                ->required(),
-            
+            // Secondary Category tetap pakai relasi secondaryCategory
+            Forms\Components\Select::make('secondary_category_id')
+                ->label('Secondary Category')
+                ->relationship('secondaryCategory', 'category_name')
+                ->nullable(),
 
             Forms\Components\FileUpload::make('image_url')
                 ->label('Product Image')
-                ->directory('img') // -> disimpan di public/storage/img
+                ->directory('img')
                 ->disk('public')
                 ->visibility('public')
                 ->image()
@@ -57,16 +63,20 @@ class ProductResource extends Resource
             Tables\Columns\TextColumn::make('product_name')->searchable()->sortable(),
             Tables\Columns\TextColumn::make('price')->money('IDR', true),
             Tables\Columns\TextColumn::make('stock'),
-            Tables\Columns\TextColumn::make('category.category_name')->label('Category'), // ✅ ini juga
 
+            // **Ubah di sini**: ambil dari primaryCategory
+            Tables\Columns\TextColumn::make('primaryCategory.category_name')
+                ->label('Primary Category'),
+
+            Tables\Columns\TextColumn::make('secondaryCategory.category_name')
+                ->label('Secondary Category'),
 
             ImageColumn::make('image_url')
-    ->label('Product Image')
-    ->disk('public') // tetap
-    ->visibility('public')
-    ->height(60)
-    ->width(60),
-
+                ->label('Product Image')
+                ->disk('public')
+                ->visibility('public')
+                ->height(60)
+                ->width(60),
 
             Tables\Columns\TextColumn::make('created_at')->dateTime()->sortable(),
         ])
@@ -83,13 +93,12 @@ class ProductResource extends Resource
     {
         return [];
     }
-
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListProducts::route('/'),
+            'index'  => Pages\ListProducts::route('/'),
             'create' => Pages\CreateProduct::route('/create'),
-            'edit' => Pages\EditProduct::route('/{record}/edit'),
+            'edit'   => Pages\EditProduct::route('/{record}/edit'),
         ];
     }
 }

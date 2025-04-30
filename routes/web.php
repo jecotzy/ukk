@@ -33,4 +33,9 @@ Route::middleware(['auth'])->group(function () {
 
     // Home page dengan carousel produk
     Route::get('/home', [ProductController::class, 'index'])->name('home');
+
+    // Di dalam Route::middleware(['auth'])->group(function () { … });
+    Route::get('/shop', [ProductController::class, 'shop'])->name('shop');
+
 });
+
