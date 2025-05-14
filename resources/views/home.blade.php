@@ -449,143 +449,6 @@
   height: 50px;
  
 }
-/* Footer with Gradient Background */
-.footer-gradient {
-    background: linear-gradient(130.45deg, #000000 -7.99%, #331200 73.01%);
-    padding: 50px 0;
-    margin-top: 80px;
-    font-family: 'Poppins', sans-serif;
-    color: #ffffff;
-    text-align: left;
-
-}
-
-.footer-gradient .footer-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    padding: 0 20px;
-}
-
-.footer-gradient .footer-brand {
-    width: 30%;
-    margin-bottom: 30px;
-}
-
-.footer-gradient .footer-logo {
-    margin-top: -60px;
-    height: 200px;
-    width: 200px;
-    margin-bottom: -45px;
-    filter: brightness(0) invert(1); /* Makes logo white */
-}
-
-.footer-gradient .footer-description {
-    font-size: 14px;
-    color: rgba(255, 255, 255, 0.8);
-    line-height: 1.6;
-    margin-bottom: 22px;
-    text-align: left;
-}
-
-.footer-gradient .social-media {
-    display: flex;
-    gap: 15px;
-}
-
-.footer-gradient .social-icon {
-    width: 35px;
-    height: 35px;
-    transition: opacity 0.3s;
-    filter: brightness(0) invert(1); /* Makes icons white */
-}
-
-.footer-gradient .social-icon:hover {
-    opacity: 0.7;
-}
-
-.footer-gradient .footer-section {
-    width: 20%;
-    margin-bottom: 30px;
-}
-
-.footer-gradient .footer-heading {
-    font-size: 16px;
-    font-weight: 600;
-    margin-bottom: 20px;
-    color: #ffffff;
-    text-align: lef;
-}
-
-.footer-gradient .footer-links {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.footer-gradient .footer-links li {
-    margin-bottom: 10px;
-}
-
-.footer-gradient .footer-link {
-    text-decoration: none;
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 14px;
-    transition: color 0.3s;
-    display: flex;
-    align-items: center;
-    
-}
-
-.footer-gradient .footer-link:hover {
-    color: #ffffff;
-    text-decoration: underline;
-}
-
-.footer-gradient .copyright {
-    text-align: center;
-    margin-top: 50px;
-    padding-top: 20px;
-    border-top: 1px solid #ffffff;
-}
-
-.footer-gradient .copyright-text {
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 14px;
-}
-.footer-gradient .footer-icon {
-    width: 22px;
-    height: 22px;
-    margin-right: 10px;
-    vertical-align: middle;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .footer-gradient .footer-brand,
-    .footer-gradient .footer-section {
-        width: 100%;
-        text-align: center;
-    }
-    
-    .footer-gradient .social-media {
-        justify-content: center;
-    }
-    
-    .footer-gradient .footer-links {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 15px;
-
-    }
-    
-    .footer-gradient .footer-links li {
-        margin: 0 10px 10px 0;
-    }
-}
 
 
 /* 1. Biarkan background-box jadi “jendela” yang memotong overflow */
@@ -725,11 +588,145 @@
   color: black;
 }
 
+/* Footer with Gradient Background */
+.footer-gradient {
+    background: linear-gradient(130.45deg, #000000 -7.99%, #331200 73.01%);
+    padding: 50px 0;
+    margin-top: 80px;
+    font-family: 'Poppins', sans-serif;
+    color: #ffffff;
+    text-align: left;
 
+}
 
+.footer-gradient .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 0 20px;
+}
 
+.footer-gradient .footer-brand {
+    width: 30%;
+    margin-bottom: 30px;
+}
 
-        </style>
+.footer-gradient .footer-logo {
+    margin-top: -60px;
+    height: 200px;
+    width: 200px;
+    margin-bottom: -45px;
+    filter: brightness(0) invert(1); /* Makes logo white */
+}
+
+.footer-gradient .footer-description {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.6;
+    margin-bottom: 22px;
+    text-align: left;
+}
+
+.footer-gradient .social-media {
+    display: flex;
+    gap: 15px;
+}
+
+.footer-gradient .social-icon {
+    width: 35px;
+    height: 35px;
+    transition: opacity 0.3s;
+    filter: brightness(0) invert(1); /* Makes icons white */
+}
+
+.footer-gradient .social-icon:hover {
+    opacity: 0.7;
+}
+
+.footer-gradient .footer-section {
+    width: 20%;
+    margin-bottom: 30px;
+}
+
+.footer-gradient .footer-heading {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #ffffff;
+    text-align: lef;
+}
+
+.footer-gradient .footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-gradient .footer-links li {
+    margin-bottom: 10px;
+}
+
+.footer-gradient .footer-link {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 14px;
+    transition: color 0.3s;
+    display: flex;
+    align-items: center;
+    
+}
+
+.footer-gradient .footer-link:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+.footer-gradient .copyright {
+    text-align: center;
+    margin-top: 50px;
+    padding-top: 20px;
+    border-top: 1px solid #ffffff;
+}
+
+.footer-gradient .copyright-text {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 14px;
+}
+.footer-gradient .footer-icon {
+    width: 22px;
+    height: 22px;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .footer-gradient .footer-brand,
+    .footer-gradient .footer-section {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .footer-gradient .social-media {
+        justify-content: center;
+    }
+    
+    .footer-gradient .footer-links {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+
+    }
+    
+    .footer-gradient .footer-links li {
+        margin: 0 10px 10px 0;
+    }
+}
+
+</style>
     </head>
     <body>
 

@@ -3,7 +3,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Review; 
 use Illuminate\Http\Request;
+
 
 class ProductController extends Controller
 {
@@ -20,30 +22,57 @@ class ProductController extends Controller
         return view('home', compact('menProducts', 'womenProducts'));
     }
 
+    // ProductController.php
     public function shop()
     {
-        // Ambil semua produk sekaligus, beserta primaryCategory dan secondaryCategory
+        // Ambil produk dan kategori seperti biasa
         $products = Product::with(['primaryCategory', 'secondaryCategory'])->get();
     
-        // Kelompokkan berdasarkan primary category (Women, Men, Kids, Sale)
-        $groupedByPrimary = $products->groupBy(function($product) {
-            return $product->primaryCategory->category_name ?? 'Others';
-        });
-    
-        // Lalu masing-masing kategori besar (Women, Men, Kids, Sale) juga dikelompokkan lagi berdasarkan secondary category
+        // Kelompokkan produk berdasarkan kategori utama
+        $groupedByPrimary = $products->groupBy(fn($p) => $p->primaryCategory->category_name ?? 'Others');
         $groupedProducts = [];
-        foreach ($groupedByPrimary as $primaryCategory => $products) {
-            $groupedProducts[$primaryCategory] = $products->groupBy(function($product) {
-                return $product->secondaryCategory->category_name ?? 'Others';
-            });
+        
+        // Kelompokkan lebih lanjut berdasarkan kategori sekunder
+        foreach ($groupedByPrimary as $primary => $prods) {
+            $groupedProducts[$primary] = $prods->groupBy(fn($p) => $p->secondaryCategory->category_name ?? 'Others');
         }
     
-        // New Arrivals
+        // Ambil produk terbaru (5 produk terakhir)
         $newArrivals = Product::orderBy('created_at', 'desc')->take(5)->get();
     
-        return view('shop', compact('groupedProducts', 'newArrivals'));
+        // Ambil statistik review global
+        $reviews = Review::with('user')->latest()->take(3)->get();
+        $totalReviews   = $reviews->count();
+        $avgRating      = $reviews->avg('rating');
+        $countsByRating = $reviews
+            ->groupBy('rating')
+            ->map(fn($group) => $group->count());
+    
+        $percentByRating = $countsByRating
+            ->map(fn($cnt) => $totalReviews
+                ? round($cnt / $totalReviews * 100, 1)
+                : 0
+            );
+    
+        return view('shop', compact(
+            'groupedProducts', // Pastikan $groupedProducts sudah terdefinisi
+            'newArrivals',
+            'reviews',
+            'totalReviews',
+            'avgRating',
+            'countsByRating',
+            'percentByRating'
+        ));
     }
     
+
+    public function show($slug)
+    {
+        $product = Product::where('slug', $slug)->firstOrFail();
+
+        return view('show', compact('product'));
+    }
+
     
     
 
